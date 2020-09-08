@@ -1,0 +1,111 @@
+<style>
+    body,
+    html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background: #7abecc !important;
+    }
+    input{
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+    }
+    .delbtn{
+        margin: 10;
+        background-color:orange;
+        color:#fff;
+        border-radius: 3px;
+        padding: 8px;
+        text-decoration: none;
+    }
+    .upbtn{
+        margin: 10;
+        background-color:lightseagreen;
+        color:#fff;
+        border-radius: 3px;
+        padding: 8px;
+        text-decoration: none;
+    }
+    .lsdata{
+        margin: 50;
+    }
+    .user_card {
+        width: 600px;
+        height: 225px;
+        padding: 20px;
+        border-radius: 3px;
+        margin-top: 20;
+        margin-left: 350;
+        margin-bottom: auto;
+        background: #74cfbf;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        padding: 10px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        border-radius: 5px;
+
+    }
+    .listtodo{
+        background-color: #906abd ;
+        margin: 10px;
+        padding: 20px;
+        border-radius: 3px;
+        color: #fff;
+        font-size: 20px;
+        box-shadow: 0px --1px 10px -4px rgba(0, 0, 0, 0.79);
+    }
+
+    .form_container {
+        margin-top: 20px;
+    }
+
+    #form-title{
+        color: #fff;
+    }
+    .login_btn {
+        width: 100%;
+        background: #33ccff !important;
+        color: white !important;
+    }
+    
+</style>
+<div class="user_card">
+    <center>
+<h2 id="form-title">TO DO </h2>
+
+<form method="POST" action="/">
+    
+    {% csrf_token %}
+    <div>
+        {{form.title}}
+    </div>
+    <div>
+        {{form.notes}}
+    </div>
+
+    
+    <input class="btn login_btn" type='submit' name="create todo" value="Add New To Do">
+</div>
+</form>
+</center>
+{% for tasks in task%}
+<div class="listtodo">
+    <a class="upbtn" href="{% url 'updatetodo' tasks.id %}">Update</a>
+    <a class="delbtn" href="{% url 'deletetodo' tasks.id %}">Delete</a>
+    {% if tasks.complete == True %}
+    <span class="lsdata"><strike>{{tasks.title}}</strike></span>
+    <strike>{{tasks.notes}}</strike>
+    {% else %}
+    <span class="lsdata">{{tasks.title}}</span> =>
+    <span class="lsdata">{{tasks.notes}}</span>
+    <span class="lsdata">created date & time = {{tasks.date}}</span>
+    {% endif %}
+    
+</div>
+{%endfor%}
